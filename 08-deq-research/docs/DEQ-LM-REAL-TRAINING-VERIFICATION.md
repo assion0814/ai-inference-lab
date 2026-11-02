@@ -1,8 +1,3 @@
-<!-- 层归属（SOC.md §四）：经营（后台）。技术资产登记 -->
-> **层归属**：`经营（后台）` —— 技术认知/实验验证
-> **执行体**：`~/deq-lab/train/{deq_lm_wn.py, train_deq_lm.py}`、`~/deq-lab/data/deq-lm/`
-> **项目状态**：✅ 完成（2026-10-29，真正的语言模型训练对比）
-> **前置资产**：[`DEQ-EXTERNAL-ATTACH-VERIFICATION.md`](DEQ-EXTERNAL-ATTACH-VERIFICATION.md)、[`THREE-LAYER-FRAMEWORK-VERIFICATION.md`](THREE-LAYER-FRAMEWORK-VERIFICATION.md)
 
 # DEQ 真正验证：训练 DEQ-LM vs Transformer
 

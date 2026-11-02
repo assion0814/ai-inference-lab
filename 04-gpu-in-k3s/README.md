@@ -1,4 +1,4 @@
-﻿# 04 · GPU on k3s + 监控栈
+# 04 · GPU on k3s + 监控栈
 
 在单机 V100 上把 GPU 接入 k3s，推理服务 K8s 化，并搭起 Prometheus 监控 + 告警 + 巡检。
 
@@ -11,7 +11,7 @@
 | 监控栈 | 是（Prometheus + 自研 exporter + 8 条告警） | `/api/v1/targets` → up |
 | 多节点调度 | 是（ARM + x86，3 副本分布两节点） | `kubectl get pods -o wide` |
 | 故障复盘 | 是（253 次重启根因） | [docs/POSTMORTEM-k3s-restarts.md](./docs/POSTMORTEM-k3s-restarts.md) |
-| 巡检脚本 | 是（157 行 + 负对照） | 负对照正确报红 |
+| 巡检脚本 | 是（154 行；负对照通过人工验证） | 负对照正确报红 |
 
 ## 环境
 

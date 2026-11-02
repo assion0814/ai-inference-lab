@@ -1,8 +1,3 @@
-<!-- 层归属（SOC.md §四）：经营（后台）。技术资产登记 -->
-> **层归属**：`经营（后台）` —— 技术认知/实验验证
-> **执行体**：`~/deq-lab/attach/external_attach_hard.py`、`~/deq-lab/gpu/verify_deq_gpu_v2.py`
-> **项目状态**：✅ 完成（2026-10-29，外挂验证失败，结论明确）
-> **前置资产**：[`THREE-LAYER-FRAMEWORK-VERIFICATION.md`](THREE-LAYER-FRAMEWORK-VERIFICATION.md)、[`MAYA-GAME-BOTTLENECK-MAP.md`](MAYA-GAME-BOTTLENECK-MAP.md)
 
 # DEQ 外挂验证：从理论到实测的完整链路
 

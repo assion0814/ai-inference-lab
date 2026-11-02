@@ -1,0 +1,8 @@
+# 各项目的依赖汇总（各项目内部版本要求见各自 README）
+# Python 3.10+（04 的某些脚本需要 3.12）
+numpy>=1.26
+torch>=2.0          # 08 需要 torch 2.10.0+cu126（本机实测）
+transformers>=4.40  # 08 的外挂验证
+ray==2.59.0         # 03 的异构集群（README 自认版本必须逐位一致）
+pyyaml>=6.0
+prometheus-client   # 04 的 exporter（可选，api 模式不需要）

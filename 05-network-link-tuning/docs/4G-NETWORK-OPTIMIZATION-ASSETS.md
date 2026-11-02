@@ -1,8 +1,4 @@
-<!-- 层归属（SOC.md §四）：经营（后台）。技术资产登记 -->
-> **层归属**：`经营（后台）` —— 技术资产登记与可复用工程配方
-> **执行体**：无（人工维护）
-> **项目状态**：**✅ 4G 高延迟链路调优完成（2026-10-26）**
-> **相关资产**：[`RK3588-NETWORK-ASSETS.md`](RK3588-NETWORK-ASSETS.md)、[`AI-CLUSTER-STACK-ASSETS.md`](AI-CLUSTER-STACK-ASSETS.md)
+> **相关资产**：`RK3588-NETWORK-ASSETS.md`（未随本仓库发布）、`AI-CLUSTER-STACK-ASSETS.md`（未随本仓库发布）
 
 # 4G 移动网络链路调优实录（华为随行WiFi 3 Pro）
 

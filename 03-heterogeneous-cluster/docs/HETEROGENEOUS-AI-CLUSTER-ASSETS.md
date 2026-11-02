@@ -1,8 +1,4 @@
-<!-- 层归属（SOC.md §四）：经营（后台）。技术资产登记 -->
-> **层归属**：`经营（后台）` —— 技术资产登记与可复用工程配方
-> **执行体**：无（人工维护）
-> **项目状态**：**✅ Ray 异构集群跑通（UM890 x86_64+V100 ↔ RK3588 aarch64）**
-> **相关资产**：[`V100-OPERATION-ASSETS.md`](V100-OPERATION-ASSETS.md)、[`RK3588-NETWORK-ASSETS.md`](RK3588-NETWORK-ASSETS.md)
+> **相关资产**：`V100-OPERATION-ASSETS.md`（未随本仓库发布）、`RK3588-NETWORK-ASSETS.md`（未随本仓库发布）
 
 # 异构 AI 集群：UM890(V100) + RK3588 + Windows 笔记本（2026-10-25）
 

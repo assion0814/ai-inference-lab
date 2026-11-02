@@ -1,8 +1,3 @@
-<!-- 层归属（SOC.md §四）：经营（后台）。技术资产登记 -->
-> **层归属**：`经营（后台）` —— 技术认知/实验验证
-> **执行体**：`~/deq-lab/train/combined_3way.py`、`~/deq-lab/data/deq-lm/`
-> **项目状态**：✅ 完成（2026-10-29，4 臂消融）
-> **前置资产**：[`DEQ-LM-REAL-TRAINING-VERIFICATION.md`](DEQ-LM-REAL-TRAINING-VERIFICATION.md)、[`THREE-LAYER-FRAMEWORK-VERIFICATION.md`](THREE-LAYER-FRAMEWORK-VERIFICATION.md)
 
 # 三者结合验证：4 臂消融实验
 

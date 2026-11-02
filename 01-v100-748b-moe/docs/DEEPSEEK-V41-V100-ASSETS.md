@@ -1,12 +1,8 @@
-<!-- 层归属（SOC.md §四）：经营（后台）。技术资产登记 -->
-> **层归属**：`经营（后台）` —— 技术资产登记与可复用工程配方
-> **执行体**：`/home/assion/project-maya/run-maya-ds4.sh`（前台服务）
-> **项目状态**：**✅ 成功运行（2026-10-28，实测 12.8-15.2 tok/s）**
-> **相关资产**：[`PROJECT-MAYA-V100-ASSETS.md`](PROJECT-MAYA-V100-ASSETS.md)、[`STRATA-DSV41-V100-BUILD.md`](STRATA-DSV41-V100-BUILD.md)
+> **相关资产**：`PROJECT-MAYA-V100-ASSETS.md`（未随本仓库发布）、`STRATA-DSV41-V100-BUILD.md`（未随本仓库发布）
 
 # 🏆 DeepSeek-V4.1-Flash（748B MoE）在单张 V100 上成功运行
 
-> **历史性成果：2017 年的 Tesla V100-PCIE-32GB（二手价约 1000 元）成功运行 748B 参数的 DeepSeek V4.1-Flash，实测 12.8-15.2 tok/s。**
+> **历史性成果：2017 年的 Tesla V100-PCIE-32GB（二手价约 4000 元）成功运行 748B 参数的 DeepSeek V4.1-Flash，实测 12.8-15.2 tok/s。**
 
 ---
 
@@ -63,7 +59,7 @@ V100 功耗:        43.74 W（远低于 250W 上限）
 ```
 模型:   DeepSeek-V4.1-Flash-1017（748B 参数 MoE）
 量化:   Maya-XS（Project Maya 自研）
-  · routed experts: IQ1_S（1.75 bit，error-feedback rounding）
+  · routed experts: IQ1_S（1.56 bit（IQ1_S；注意 llama.cpp 定义 IQ1_S=1.56 bpw、IQ1_M=1.75 bpw），error-feedback rounding）
   · dense weights:  Q8_0
   · Engram tables:  Q6_K
   · drafter:        IQ2_XXS（3.5GB，可选）

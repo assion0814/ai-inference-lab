@@ -1,8 +1,3 @@
-<!-- 层归属（SOC.md §四）：经营（后台）。技术资产登记 -->
-> **层归属**：`经营（后台）` —— 技术认知/实验验证
-> **执行体**：`~/deq-lab/train/module_scale.py`
-> **项目状态**：✅ 完成（2026-10-29）
-> **前置资产**：[`THREE-WAY-COMBINATION-ABLATION.md`](THREE-WAY-COMBINATION-ABLATION.md)、[`DEQ-LM-REAL-TRAINING-VERIFICATION.md`](DEQ-LM-REAL-TRAINING-VERIFICATION.md)
 
 # 模块尺度实验：参数对模块来说是不是太大？
 
