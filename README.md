@@ -1,2 +1,38 @@
-# ai-inference-lab
-Reproducible LLM inference benchmarks from a 6-TOPS edge NPU to a 2017 Tesla V100. Operator-level roofline analysis (CUDA microbenchmarks + nsight-compute), 66 optimization techniques verified, heterogeneous Ray + K3s cluster experiments. 从端侧到 748B MoE 的全链路推理性能实测与算子级归因。
+﻿# AI Inference Lab
+
+把「这台硬件到底能跑多快、瓶颈在哪一层」变成可量化、可复算的结论。
+
+> 我在一台 64GB 内存的迷你主机 + 一张 4000 元的二手 V100 上，把 257GB 的 748B MoE 模型跑到 24–27 tok/s，并把每一个瓶颈都量化清楚。
+
+## 目录
+
+| # | 项目 | 关键结果 | 硬件 |
+|---|---|---|---|
+| 01 | [748B MoE on a Single V100](./01-v100-748b-moe) | 24–27 tok/s（批处理）/ 14–15（HTTP），达官方 76% | V100 32GB + 64GB RAM |
+| 02 | [跨平台推理实测与算子级归因](./02-cross-platform-bench) | 带宽天花板 274.1 GB/s（95.2%），decode 达 96.5% roofline | RK3588 / 780M / 4060 Ti |
+| 03 | [异构计算池（Ray）](./03-heterogeneous-cluster) | GPU 任务调度 3/3、节点亲和 4/4、跨架构通信 | x86+V100 ↔ ARM64 |
+| 04 | [GPU on k3s + 监控栈](./04-gpu-in-k3s) | GPU 可调度、推理服务 K8s 化、Prometheus + 8 条告警、253 次重启复盘 | V100 + k3s |
+| 05 | [链路故障诊断与 TCP 调优](./05-network-link-tuning) | 0.1 → 峰值 16.4 MB/s | 4G LTE |
+| 06 | [传感器协议逆向](./06-sensor-protocol-reverse) | IMU 串口/I2C 协议还原 + 四元数交叉验证 | RK3588 |
+
+## 三个值得记住的结论
+
+**1. 速度 ≈ 带宽。** 三平台 decode 14.57 / 70.15 / 217.84 tok/s，与显存带宽 68 / 90 / 288 GB/s 同比例。算力只在 prefill 有意义。
+
+**2. 我测的是天花板，不只是一个优化数字。** 自写 float4 kernel 打满 274.1 GB/s（理论 95.2%）；此时 decode 已在 96.5% roofline 上，剩余 0–3.5% 不值得继续优化。
+
+**3. 负结果也是结果。** 66 项优化技术里有 25 项无效、13 项物理不可能。知道「不该试什么」省下的时间，比任何单项优化都多。
+
+## 方法说明
+
+- 每条结论在对应目录的 `docs/` 下都有原始记录
+- 测量用 CPU 负对照 + 预注册判据 + 口径分解，避免把「架构优势」与「量化收益」混算
+- 已知测量陷阱全部记录：冷启动（5.4 倍误差）、PCIe 空闲态 ASPM 降速（Gen4→Gen1）、PPL 随 chunk 数漂移
+
+## 边界说明
+
+全部为**单机 / 小规模**实验（Ray 2 节点、k3s 2 节点、1 张 GPU），无 RDMA/InfiniBand、无生产集群、无多卡训练。未做的部分在每个项目的 README 里单独列出。
+
+## License
+
+代码 MIT · 文档 CC-BY-4.0

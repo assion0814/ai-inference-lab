@@ -1,0 +1,22 @@
+[Unit]
+Description=DeepSeek V4.1-Flash (Maya-XS) inference server on V100
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=assion
+Group=assion
+WorkingDirectory=/home/assion/project-maya
+ExecStart=/home/assion/project-maya/run-maya-ds4.sh
+Restart=on-failure
+RestartSec=30
+# 关机时优雅停止（释放 V100）
+KillMode=mixed
+KillSignal=SIGTERM
+TimeoutStopSec=60
+StandardOutput=append:/var/log/deepseek-maya.log
+StandardError=append:/var/log/deepseek-maya.log
+
+[Install]
+WantedBy=multi-user.target

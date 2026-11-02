@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: gpu-v7-test
+  namespace: test
+spec:
+  restartPolicy: Never
+  nodeSelector:
+    kubernetes.io/hostname: um890pro
+  containers:
+  - name: smi
+    image: ubuntu:26.04
+    securityContext:
+      privileged: true
+    command: ["/bin/bash", "-c"]
+    args:
+    - |
+      export LD_LIBRARY_PATH=/nvidia-libs
+      echo "=== nvidia-smi ==="
+      /nvidia-bin/nvidia-smi 2>&1 | head -25
+      echo "=== exit: $? ==="
+      echo "=== query ==="
+      /nvidia-bin/nvidia-smi --query-gpu=index,name,driver_version,memory.total,temperature.gpu --format=csv 2>&1
+    volumeMounts:
+    - {name: dev0, mountPath: /dev/nvidia0}
+    - {name: devctl, mountPath: /dev/nvidiactl}
+    - {name: devuvm, mountPath: /dev/nvidia-uvm}
+    - {name: devuvmt, mountPath: /dev/nvidia-uvm-tools}
+    - {name: devmodeset, mountPath: /dev/nvidia-modeset}
+    - {name: nvbin, mountPath: /nvidia-bin, readOnly: true}
+    - {name: nvlibs, mountPath: /nvidia-libs, readOnly: true}
+  volumes:
+  - {name: dev0, hostPath: {path: /dev/nvidia0, type: CharDevice}}
+  - {name: devctl, hostPath: {path: /dev/nvidiactl, type: CharDevice}}
+  - {name: devuvm, hostPath: {path: /dev/nvidia-uvm, type: CharDevice}}
+  - {name: devuvmt, hostPath: {path: /dev/nvidia-uvm-tools, type: CharDevice}}
+  - {name: devmodeset, hostPath: {path: /dev/nvidia-modeset, type: CharDevice}}
+  - {name: nvbin, hostPath: {path: /usr/bin, type: Directory}}
+  - {name: nvlibs, hostPath: {path: /usr/lib/x86_64-linux-gnu, type: Directory}}

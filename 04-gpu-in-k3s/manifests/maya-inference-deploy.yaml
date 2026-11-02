@@ -1,0 +1,119 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: maya-inference
+  namespace: inference
+  labels:
+    app: maya-inference
+    model: deepseek-v4.1-flash
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: maya-inference
+  template:
+    metadata:
+      labels:
+        app: maya-inference
+        model: deepseek-v4.1-flash
+    spec:
+      runtimeClassName: nvidia
+      nodeSelector:
+        kubernetes.io/hostname: um890pro
+      hostNetwork: true
+      containers:
+      - name: maya-server
+        image: ubuntu:26.04
+        imagePullPolicy: IfNotPresent
+        workingDir: /home/assion/project-maya
+        command: ["/home/assion/project-maya/.venv/bin/python", "/home/assion/project-maya/maya.py"]
+        args:
+          - "--config"
+          - "/home/assion/project-maya/maya-ds4.json"
+          - "--port"
+          - "8080"
+          - "--host"
+          - "0.0.0.0"
+        env:
+          - {name: DS4_STREAM, value: "0"}
+          - {name: DS4_HC_FUSE, value: "1"}
+          - {name: DS4_ROUTE_FUSE, value: "1"}
+          - {name: DS4_SKIP_UNPICKED, value: "1"}
+          - {name: DS4_INDEX_TC, value: "1"}
+          - {name: DS4_PF_ALL, value: "1"}
+          - {name: DS4_PROFILE_FREEZE, value: "1"}
+          - {name: LD_LIBRARY_PATH, value: "/cuda-libs:/usr/lib/x86_64-linux-gnu"}
+          - {name: HOME, value: "/tmp"}
+          - {name: PYTHONUNBUFFERED, value: "1"}
+        resources:
+          limits:
+            nvidia.com/gpu: 1
+            memory: "54Gi"
+            cpu: "14"
+        ports:
+        - containerPort: 8080
+          hostPort: 8080
+        readinessProbe:
+          exec:
+            command:
+              - /bin/bash
+              - -c
+              - "timeout 2 bash -c '</dev/tcp/127.0.0.1/8080' && echo ready || exit 1"
+          initialDelaySeconds: 60
+          periodSeconds: 15
+          failureThreshold: 20
+          successThreshold: 1
+        livenessProbe:
+          exec:
+            command:
+              - /bin/bash
+              - -c
+              - "timeout 3 bash -c '</dev/tcp/127.0.0.1/8080' && echo alive || exit 1"
+          initialDelaySeconds: 300
+          periodSeconds: 60
+          failureThreshold: 5
+        volumeMounts:
+        - name: maya-src
+          mountPath: /home/assion/project-maya
+        - name: models
+          mountPath: /data/kafka/maya-models
+          readOnly: true
+        - name: uv-python
+          mountPath: /home/assion/.local/share/uv
+          readOnly: true
+        - name: cuda-libs
+          mountPath: /cuda-libs
+          readOnly: true
+      volumes:
+      - name: maya-src
+        hostPath:
+          path: /home/assion/project-maya
+          type: Directory
+      - name: models
+        hostPath:
+          path: /data/kafka/maya-models
+          type: Directory
+      - name: uv-python
+        hostPath:
+          path: /home/assion/.local/share/uv
+          type: Directory
+      - name: cuda-libs
+        hostPath:
+          path: /usr/lib/x86_64-linux-gnu
+          type: Directory
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: maya-inference
+  namespace: inference
+spec:
+  type: ClusterIP
+  selector:
+    app: maya-inference
+  ports:
+  - port: 8080
+    targetPort: 8080
+    name: http

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>V100 GPU Monitor · um890pro</title>
+<style>
+body { background:#0d1117; color:#c9d1d9; font-family:'Segoe UI',monospace; margin:0; padding:20px; }
+h1 { color:#58a6ff; font-size:1.5em; }
+.grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:15px; margin-top:20px; }
+.card { background:#161b22; border:1px solid #30363d; border-radius:8px; padding:18px; }
+.card .label { color:#8b949e; font-size:0.85em; margin-bottom:6px; }
+.card .val { font-size:2em; font-weight:bold; color:#3fb950; }
+.card .unit { font-size:0.5em; color:#8b949e; margin-left:4px; }
+.warn .val { color:#d29922; }
+.crit .val { color:#f85149; }
+.status { margin-top:20px; padding:10px; background:#161b22; border-radius:6px; font-size:0.85em; color:#8b949e; }
+</style>
+</head>
+<body>
+<h1>🖥️ V100 GPU Monitor · um890pro</h1>
+<div class="grid" id="grid">Loading...</div>
+<div class="status" id="status"></div>
+<script>
+const PROM='http://127.0.0.1:9090';
+async function q(query){
+  try{
+    const r=await fetch(`${PROM}/api/v1/query?query=${encodeURIComponent(query)}`);
+    const d=await r.json();
+    return d.data.result.length? parseFloat(d.data.result[0].value[1]) : null;
+  }catch(e){return null;}
+}
+const M=[
+  ['GPU 温度','nvidia_gpu_temperature_celsius','°C',1,80,90],
+  ['GPU 利用率','nvidia_gpu_utilization_percent','%',1,90,99],
+  ['显存已用','nvidia_gpu_memory_used_bytes','GB',1e9,28,31],
+  ['显存总量','nvidia_gpu_memory_total_bytes','GB',1e9,999,999],
+  ['功耗','nvidia_gpu_power_draw_watts','W',1,220,245],
+  ['功率上限','nvidia_gpu_power_limit_watts','W',1,999,999],
+  ['显存时钟','nvidia_gpu_clock_memory_mhz','MHz',1,999,999],
+  ['系统负载 1m','node_load{period="1m"}','',1,12,15],
+  ['内存可用','node_memory_MemAvailable_bytes','GB',1e9,-1,-1],
+  ['运行时间','node_uptime_seconds','h',3600,999,999],
+];
+async function update(){
+  let html='';
+  for(const [name,query,unit,div,warn,crit] of M){
+    let v=await q(query);
+    if(v!==null){
+      v=v/div;
+      let cls='';
+      if(warn>0){ if(v>=crit)cls='crit'; else if(v>=warn)cls='warn'; }
+      html+=`<div class="card ${cls}"><div class="label">${name}</div><div class="val">${v.toFixed(v<10?2:1)}<span class="unit">${unit}</span></div></div>`;
+    } else {
+      html+=`<div class="card"><div class="label">${name}</div><div class="val">N/A</div></div>`;
+    }
+  }
+  document.getElementById('grid').innerHTML=html;
+  document.getElementById('status').textContent='最后更新: '+new Date().toLocaleTimeString()+' · 数据源: Prometheus @ 127.0.0.1:9090';
+}
+update(); setInterval(update,5000);
+</script>
+</body>
+</html>

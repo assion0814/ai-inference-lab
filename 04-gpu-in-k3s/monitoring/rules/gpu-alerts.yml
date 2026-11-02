@@ -1,0 +1,69 @@
+groups:
+- name: gpu-alerts
+  rules:
+  - alert: GPUTemperatureHigh
+    expr: nvidia_gpu_temperature_celsius > 80
+    for: 2m
+    labels:
+      severity: warning
+    annotations:
+      summary: "GPU {{ $labels.gpu }} 温度过高 ({{ $value }}°C)"
+      description: "V100 温度超过 80°C，检查散热"
+
+  - alert: GPUTemperatureCritical
+    expr: nvidia_gpu_temperature_celsius > 90
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      summary: "GPU {{ $labels.gpu }} 温度危险 ({{ $value }}°C)"
+      description: "V100 温度超过 90°C，可能降频或损坏"
+
+  - alert: GPUMemoryHigh
+    expr: nvidia_gpu_memory_used_bytes / nvidia_gpu_memory_total_bytes > 0.95
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "GPU {{ $labels.gpu }} 显存使用率 >95%"
+
+  - alert: GPUUtilizationZero
+    expr: nvidia_gpu_utilization_percent == 0
+    for: 10m
+    labels:
+      severity: info
+    annotations:
+      summary: "GPU {{ $labels.gpu }} 空闲超过 10 分钟"
+
+  - alert: GPUPowerHigh
+    expr: nvidia_gpu_power_draw_watts > 240
+    for: 3m
+    labels:
+      severity: warning
+    annotations:
+      summary: "GPU {{ $labels.gpu }} 功耗接近上限"
+
+- name: node-alerts
+  rules:
+  - alert: NodeRebootDetected
+    expr: changes(node_uptime_seconds[10m]) > 0 and node_uptime_seconds < 300
+    labels:
+      severity: info
+    annotations:
+      summary: "节点可能刚重启（uptime={{ $value }}s）"
+
+  - alert: NodeMemoryPressure
+    expr: (node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes > 0.9
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "节点内存使用率 >90%"
+
+  - alert: NodeHighLoad
+    expr: node_load{period="1m"} > 14
+    for: 10m
+    labels:
+      severity: info
+    annotations:
+      summary: "系统 1 分钟负载 >14（16 核）"
