@@ -1,0 +1,124 @@
+[
+  {
+    "name": "MoE-4exp-top1",
+    "params": 11880994,
+    "ppl": 70.94472697927011,
+    "time": 31.26277256011963,
+    "avg_iters": 0,
+    "n_experts": 4,
+    "top_k": 1,
+    "active_rate": 0.25
+  },
+  {
+    "name": "MoE-8exp-top1",
+    "params": 12675106,
+    "ppl": 71.04145099933976,
+    "time": 43.20633602142334,
+    "avg_iters": 0,
+    "n_experts": 8,
+    "top_k": 1,
+    "active_rate": 0.125
+  },
+  {
+    "name": "MoE-16exp-top1",
+    "params": 14263330,
+    "ppl": 69.98052274655687,
+    "time": 65.82643723487854,
+    "avg_iters": 0,
+    "n_experts": 16,
+    "top_k": 1,
+    "active_rate": 0.0625
+  },
+  {
+    "name": "MoE-32exp-top1",
+    "params": 17439778,
+    "ppl": 69.46692028400511,
+    "time": 113.24720239639282,
+    "avg_iters": 0,
+    "n_experts": 32,
+    "top_k": 1,
+    "active_rate": 0.03125
+  },
+  {
+    "name": "MoE-64exp-top1",
+    "params": 23792674,
+    "ppl": 69.12887964244757,
+    "time": 200.36922788619995,
+    "avg_iters": 0,
+    "n_experts": 64,
+    "top_k": 1,
+    "active_rate": 0.015625
+  },
+  {
+    "name": "EQ d=64 it=15",
+    "params": 11121314,
+    "ppl": 67.91967749894928,
+    "time": 19.58907437324524,
+    "avg_iters": 1.0,
+    "d_eq": 64,
+    "eq_params": 37248
+  },
+  {
+    "name": "EQ d=64 it=60",
+    "params": 11121314,
+    "ppl": 67.91967749894928,
+    "time": 19.56790280342102,
+    "avg_iters": 1.0,
+    "d_eq": 64,
+    "eq_params": 37248
+  },
+  {
+    "name": "EQ d=128 it=15",
+    "params": 11166498,
+    "ppl": 68.16679160508224,
+    "time": 19.647255659103394,
+    "avg_iters": 1.0,
+    "d_eq": 128,
+    "eq_params": 82432
+  },
+  {
+    "name": "EQ d=128 it=60",
+    "params": 11166498,
+    "ppl": 68.16679160508224,
+    "time": 19.653082847595215,
+    "avg_iters": 1.0,
+    "d_eq": 128,
+    "eq_params": 82432
+  },
+  {
+    "name": "EQ d=256 it=15",
+    "params": 11281442,
+    "ppl": 68.93587900293417,
+    "time": 19.906861782073975,
+    "avg_iters": 1.0,
+    "d_eq": 256,
+    "eq_params": 197376
+  },
+  {
+    "name": "EQ d=256 it=60",
+    "params": 11281442,
+    "ppl": 68.93587900293417,
+    "time": 20.04691767692566,
+    "avg_iters": 1.0,
+    "d_eq": 256,
+    "eq_params": 197376
+  },
+  {
+    "name": "EQ d=512 it=15",
+    "params": 11609634,
+    "ppl": 69.59520209842115,
+    "time": 21.78987956047058,
+    "avg_iters": 1.0,
+    "d_eq": 512,
+    "eq_params": 525568
+  },
+  {
+    "name": "EQ d=512 it=60",
+    "params": 11609634,
+    "ppl": 69.59520209842115,
+    "time": 22.19264817237854,
+    "avg_iters": 1.0,
+    "d_eq": 512,
+    "eq_params": 525568
+  }
+]

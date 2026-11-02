@@ -1,0 +1,32 @@
+{
+  "naive_iters": 11,
+  "naive_ms": 0.9535170102026314,
+  "naive_residual": 1.4096498489379883e-05,
+  "anderson_iters": 200,
+  "anderson_ms": 67.57429300341755,
+  "anderson_residual": 188.91342163085938,
+  "unrolled_K5": {
+    "saved_bytes": 1171456,
+    "tensors": 19
+  },
+  "unrolled_K10": {
+    "saved_bytes": 2605056,
+    "tensors": 39
+  },
+  "unrolled_K20": {
+    "saved_bytes": 5472256,
+    "tensors": 79
+  },
+  "unrolled_K50": {
+    "saved_bytes": 14073856,
+    "tensors": 199
+  },
+  "true_deq_saved_bytes": 24576,
+  "true_deq_tensors": 3,
+  "true_deq_iters": 11,
+  "fixed_point_err": 4.76837158203125e-07,
+  "fixed_point_iters": 2000,
+  "DEQ(implicit)_ms": 0.7715199986705557,
+  "unrolled(11)_ms": 0.4412124020745978,
+  "ratio": 1.74863624649452
+}
